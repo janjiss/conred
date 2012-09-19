@@ -8,6 +8,9 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{ConcepticHQ reusable code}
   gem.homepage      = "http://github.com/janjiss/conred"
 
+  gem.add_development_dependency "rspec"
+  gem.add_dependency "actionpack"
+
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
