@@ -18,7 +18,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Right now (version 0.0.4) has one text formating option and video helper.
+For video you can use:
+
+    c = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc")
+    
+Then for embed code:
+    
+    c.code
+    
+You can also check if it is youtube video or vimeo video like this:
+
+    c.youtube_video? ==> true
+    c.vimeo_video? ==> false
+    
+
+Currently video feature works with Youtube and Vimeo URL's
 
 ## Contributing
 
