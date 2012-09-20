@@ -50,6 +50,7 @@ module Conred
         allowFullScreen>
       </iframe>
       eos
+      .html_safe
     end
 
     def video_from_youtube_url
@@ -70,6 +71,7 @@ module Conred
         allowfullscreen>
       </iframe>
       eos
+      .html_safe
     end
   end
 end
