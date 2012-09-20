@@ -22,6 +22,10 @@ module Conred
       text.html_safe
     end
 
+    def external_url(link)
+      /^http/.match(url) ? url : "http://#{url}"
+    end
+
   end
 
 end
