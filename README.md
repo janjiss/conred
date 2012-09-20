@@ -37,10 +37,15 @@ If you wish to use text helpers then in your application_helper add this include
 
     include Conred::Helpers
 
-Now you have method sanitize_and_trim available to you:
+Now you have these methods available to you:
+
+Sanitizes all html and trims content if count is provided:
     
     sanitize_and_trim("<html>string with", 10) => "string ..."
+    
+Sanitizes body, allowed tags are(p a strong ul ol li blockquote strike u em):
 
+    sanitize_body("<html><strong>string</strong> <p>with<p></html>") => "<strong>string</strong> <p>with<p>"
 
 
 ## Contributing
