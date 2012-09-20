@@ -1,5 +1,4 @@
 require "conred/version"
-require "action_view"
 
 module Conred
 
@@ -7,19 +6,19 @@ module Conred
     
     extend self
 
+    @action_view = ActionView::Base.new
+
     def sanitize_and_trim(text, word_count = nil, omission = '...')
-      action_view = ActionView::Base.new
-      text = action_view.strip_tags(text)
+      text = @action_view.strip_tags(text)
       if word_count
-        action_view.truncate(text, :length => word_count, :omission => omission)
+        @action_view.truncate(text, :length => word_count, :omission => omission)
       else
         text
       end
     end
 
     def sanitize_body(text)
-      action_view = ActionView::Base.new
-      text = action_view.sanitize(text, :tags => %w(p a strong ul ol li blockquote strike u em), :attributes => %w(href))
+      text = @action_view.sanitize(text, :tags => %w(p a strong ul ol li blockquote strike u em), :attributes => %w(href))
       text.html_safe
     end
 
