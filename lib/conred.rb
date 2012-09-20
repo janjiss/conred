@@ -16,16 +16,20 @@ module Conred
   end
 
   class Video
-    attr_reader :code
-
-    def initialize(video_url)
+    def initialize(video_url, width = 670, height = 450, error_message = "Video url you have provided is invalid")
+      @width = width
+      @height = height
       @video_url = video_url
+      @error_message = error_message
+    end
+
+    def code
       if youtube_video?
-        @code = video_from_youtube_url(video_url)
+        video_from_youtube_url
       elsif vimeo_video?
-        @code = video_from_vimeo_url(video_url)
+        video_from_vimeo_url
       else
-        ""
+        @error_message
       end
     end
 
@@ -44,40 +48,42 @@ module Conred
     end
 
 
-    def video_from_vimeo_url(vimeo_url, width = 670, height = 450)
-      if vimeo_url[/youtu\.be\/([^\?]*)/]
+    def video_from_vimeo_url
+      if @video_url[/vimeo\.com\/([0-9]*)/]
         vimeo_id = $1
-      else
-        vimeo_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
-        vimeo_id = $5
       end
-      "<iframe 
+      <<-eos
+      <iframe
+        id='vimeo_video'
         src='http://player.vimeo.com/video/#{vimeo_id}'
-        width='#{width}' 
-        height='#{height}'
+        width='#{@width}' 
+        height='#{@height}'
         frameborder='0'
         webkitAllowFullScreen
         mozallowfullscreen
         allowFullScreen>
-      </iframe>"
+      </iframe>
+      eos
     end
 
-    def video_from_youtube_url(youtube_url, width = 670, height = 450)
-      if youtube_url[/youtu\.be\/([^\?]*)/]
+    def video_from_youtube_url
+      if @video_url[/youtu\.be\/([^\?]*)/]
           youtube_id = $1
       else
-        youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+        @video_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
         youtube_id = $5
       end
-      "<iframe
+      <<-eos
+      <iframe
         id='youtube_video'
         title='YouTube video player' 
-        width='#{width}' 
-        height='#{height}' 
+        width='#{@width}' 
+        height='#{@height}' 
         src='http://www.youtube.com/embed/#{ youtube_id }' 
         frameborder='0' 
         allowfullscreen>
-      </iframe>".html_safe
+      </iframe>
+      eos
     end
   end
 
