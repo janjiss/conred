@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-Right now (version 0.0.4) has one text formating option and video helper.
+Right now (version 0.0.8) has several helpers and video class.
 For video you can use:
 
     c = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc")
@@ -46,6 +46,10 @@ Sanitizes all html and trims content if count is provided:
 Sanitizes body, allowed tags are(p a strong ul ol li blockquote strike u em):
 
     sanitize_body("<html><strong>string</strong> <p>with<p></html>") => "<strong>string</strong> <p>with<p>"
+    
+External link formating
+
+    external_url("www.google.lv") => "http://www.google.lv"
 
 
 ## Contributing
