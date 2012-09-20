@@ -1,6 +1,6 @@
 # Conred
 
-TODO: Write a gem description
+Conred stands for ConcepticHQ resuable and d in the end is added for awsomness
 
 ## Installation
 
