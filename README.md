@@ -31,9 +31,17 @@ You can also check if it is youtube video or vimeo video like this:
 
     c.youtube_video? ==> true
     c.vimeo_video? ==> false
-    
-
 Currently video feature works with Youtube and Vimeo URL's
+    
+If you wish to use text helpers then in your application_helper add this include line:
+
+    include Conred::Helpers
+
+Now you have method sanitize_and_trim available to you:
+    
+    sanitize_and_trim("<html>string with", 10) => "string ..."
+
+
 
 ## Contributing
 
