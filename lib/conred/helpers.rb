@@ -18,12 +18,13 @@ module Conred
     end
 
     def sanitize_body(text)
-      text = sanitize(text, :tags => %w(p a strong ul ol li blockquote strike u em), :attributes => %w(href))
+      action_view = ActionView::Base.new
+      text = action_view.sanitize(text, :tags => %w(p a strong ul ol li blockquote strike u em), :attributes => %w(href))
       text.html_safe
     end
 
     def external_url(link)
-      /^http/.match(url) ? url : "http://#{url}"
+      /^http/.match(link) ? link : "http://#{link}"
     end
 
   end
