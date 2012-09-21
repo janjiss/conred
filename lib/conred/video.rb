@@ -42,7 +42,7 @@ module Conred
       <iframe
         id='vimeo_video'
         src='http://player.vimeo.com/video/#{vimeo_id}'
-        width='#{@width}' 
+        width='#{@width}'
         height='#{@height}'
         frameborder='0'
         webkitAllowFullScreen
@@ -63,11 +63,11 @@ module Conred
       <<-eos
       <iframe
         id='youtube_video'
-        title='YouTube video player' 
-        width='#{@width}' 
-        height='#{@height}' 
-        src='http://www.youtube.com/embed/#{ youtube_id }?wmode=transparent' 
-        frameborder='0' 
+        title='YouTube video player'
+        width='#{@width}'
+        height='#{@height}'
+        src='http://www.youtube.com/embed/#{ youtube_id }?wmode=transparent'
+        frameborder='0'
         allowfullscreen>
       </iframe>
       eos

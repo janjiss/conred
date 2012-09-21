@@ -7,7 +7,7 @@ describe Conred do
       <iframe
         id='vimeo_video'
         src='http://player.vimeo.com/video/49556689'
-        width='450' 
+        width='450'
         height='300'
         frameborder='0'
         webkitAllowFullScreen
@@ -20,11 +20,11 @@ describe Conred do
       <<-eos
       <iframe
         id='youtube_video'
-        title='YouTube video player' 
-        width='450' 
-        height='300' 
-        src='http://www.youtube.com/embed/Lrj5Kxdzouc' 
-        frameborder='0' 
+        title='YouTube video player'
+        width='450'
+        height='300'
+        src='http://www.youtube.com/embed/Lrj5Kxdzouc?wmode=transparent'
+        frameborder='0'
         allowfullscreen>
       </iframe>
       eos
