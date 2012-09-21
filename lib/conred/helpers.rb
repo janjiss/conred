@@ -5,8 +5,10 @@ module Conred
   module Helpers
     
     extend self
-    mattr_accessor :action_view
-    self.action_view = ActionView::Base.new
+
+    def action_view
+      @action_view = ActionView::Base.new
+    end
 
     def sanitize_and_trim(text, word_count = nil, omission = '...')
       text = action_view.strip_tags(text)
@@ -25,7 +27,6 @@ module Conred
     def external_url(link)
       /^http/.match(link) ? link : "http://#{link}"
     end
-
   end
 
 end

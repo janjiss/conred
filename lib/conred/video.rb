@@ -66,7 +66,7 @@ module Conred
         title='YouTube video player' 
         width='#{@width}' 
         height='#{@height}' 
-        src='http://www.youtube.com/embed/#{ youtube_id }' 
+        src='http://www.youtube.com/embed/#{ youtube_id }?wmode=transparent' 
         frameborder='0' 
         allowfullscreen>
       </iframe>
