@@ -10,12 +10,12 @@ module Conred
       @action_view = ActionView::Base.new
     end
 
-    def sanitize_and_trim(text, word_count = nil, omission = '...')
+    def sanitize_and_trim(text = "", word_count = nil, omission = '...')
       text = action_view.strip_tags(text)
       if word_count
-        action_view.truncate(text, :length => word_count, :omission => omission)
+        action_view.truncate(text, :length => word_count, :omission => omission).html_safe
       else
-        text
+        text.html_safe
       end
     end
 
