@@ -3,33 +3,23 @@ require "conred"
 describe Conred do
   describe Conred::Video do
     before do
-      @vimeo_embed_code = <<-eos
-      <iframe
-        id='vimeo_video'
-        src='http://player.vimeo.com/video/49556689'
-        width='450'
-        height='300'
-        frameborder='0'
-        webkitAllowFullScreen
-        mozallowfullscreen
-        allowFullScreen>
-      </iframe>
-      eos
 
-      @youtube_embed_code = 
-      <<-eos
-      <iframe
-        id='youtube_video'
-        title='YouTube video player'
-        width='450'
-        height='300'
-        src='http://www.youtube.com/embed/Lrj5Kxdzouc?wmode=transparent'
-        frameborder='0'
-        allowfullscreen>
-      </iframe>
-      eos
+      @vimeo_code = "49556689"
+      vimeo_file = File.join(
+        File.dirname(__FILE__),
+        '..', '..', 'lib', 'views',
+        'video', 'vimeo_iframe.html.haml'
+      )
+      @vimeo_embed_code = Conred.render_file(vimeo_file).html_safe
 
-
+      @youtube_id = "Lrj5Kxdzouc"
+      youtube_file = File.join(
+        File.dirname(__FILE__),
+        '..', '..', 'lib', 'views',
+        'video', 'youtube_iframe.html.haml'
+      )
+      @youtube_embed_code = Conred.render_file(youtube_file).html_safe
+      
     end
     it "should match youtube video" do
       Conred::Video.new("http://www.youtube.com/watch?v=SZt5RFzqEfY&feature=g-all-fbc").should be_youtube_video

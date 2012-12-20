@@ -30,42 +30,36 @@ module Conred
 
     def video_from_vimeo_url
       if @video_url[/vimeo\.com\/([0-9]*)/]
-        vimeo_id = $1
+        @vimeo_id = $1
       end
-      <<-eos
-      <iframe
-        id='vimeo_video'
-        src='http://player.vimeo.com/video/#{vimeo_id}'
-        width='#{@width}'
-        height='#{@height}'
-        frameborder='0'
-        webkitAllowFullScreen
-        mozallowfullscreen
-        allowFullScreen>
-      </iframe>
-      eos
-      .html_safe
+      vimeo_file = File.join(
+        File.dirname(__FILE__),
+        '..', 'views',
+        'video', 'vimeo_iframe.html.haml'
+      )
+      render_file(vimeo_file).html_safe
     end
 
     def video_from_youtube_url
       if @video_url[/youtu\.be\/([^\?]*)/]
-          youtube_id = $1
+          @youtube_id = $1
       else
         @video_url[/(v=([A-Za-z0-9_]*))/]
-        youtube_id = $2
+        @youtube_id = $2
+
       end
-      <<-eos
-      <iframe
-        id='youtube_video'
-        title='YouTube video player'
-        width='#{@width}'
-        height='#{@height}'
-        src='http://www.youtube.com/embed/#{ youtube_id }?wmode=transparent'
-        frameborder='0'
-        allowfullscreen>
-      </iframe>
-      eos
-      .html_safe
+      youtube_file = File.join(
+        File.dirname(__FILE__),
+        '..', 'views',
+        'video', 'youtube_iframe.html.haml'
+      )
+      render_file(youtube_file).html_safe
     end
+
+    def render_file(filename)
+      contents = File.read(filename)
+      Haml::Engine.new(contents).render
+    end
+
   end
 end
