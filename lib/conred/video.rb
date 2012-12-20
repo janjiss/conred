@@ -57,8 +57,8 @@ module Conred
       if @video_url[/youtu\.be\/([^\?]*)/]
           youtube_id = $1
       else
-        @video_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
-        youtube_id = $5
+        @video_url[/(v=([A-Za-z0-9_]*))/]
+        youtube_id = $2
       end
       <<-eos
       <iframe
