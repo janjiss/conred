@@ -49,9 +49,10 @@ describe Conred do
       Conred::Video.new("eeevil vimeo www.vimeo.com/12311233").youtube_video? == false
     end  
     it "should return correct embed code" do
-       Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should == @youtube_embed_code
-       Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should == @vimeo_embed_code
-       Conred::Video.new("http://google.com/12311233", 450, 300, "Some mistake in url").code.should == "Some mistake in url"
+      Conred::Video.new("http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc", 450, 300).code.should == @youtube_embed_code
+      Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should == @youtube_embed_code
+      Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should == @vimeo_embed_code
+      Conred::Video.new("http://google.com/12311233", 450, 300, "Some mistake in url").code.should == "Some mistake in url"
     end
   end
 end
