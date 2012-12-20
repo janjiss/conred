@@ -20,17 +20,11 @@ module Conred
     end
 
     def youtube_video?
-      if /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url
-        true
-      end
+      /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url
     end
 
     def vimeo_video?
-      if /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url
-        true
-      else
-        false
-      end
+      /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url
     end
 
 
