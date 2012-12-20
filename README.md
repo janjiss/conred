@@ -1,6 +1,8 @@
 # Conred
 
-Conred stands for ConcepticHQ resuable and d in the end is added for awsomness
+In every project we have common things like video 
+embeding from url, body formating (Of course we hav Textile, but it is not good for all cases),
+external url protocol adding.
 
 ## Installation
 
@@ -55,7 +57,7 @@ External link formating
 ## Contributing
 
 1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+2. Write your feature
+3. Create tests for it (Important!)
+4. Create new Pull Request
+5. Be happy
