@@ -25,7 +25,11 @@ describe Conred do
     it "should return correct embed code" do
       Conred::Video.new("http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc", 450, 300).code.should match(/Lrj5Kxdzouc/)
       Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should match(/Lrj5Kxdzouc/)
+      Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should match(/width='450'/)
+      Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should match(/height='300'/)
       Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/49556689/)
+      Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/width='450'/)
+      Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/height='300'/)
       Conred::Video.new("http://google.com/12311233", 450, 300, "Some mistake in url").code.should == "Some mistake in url"
     end
   end
