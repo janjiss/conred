@@ -11,7 +11,6 @@ describe Conred do
     let(:vimeo_url) {Conred::Video.new("http://vimeo.com/12311233")}
     let(:evil_vimeo) {Conred::Video.new("eeevil vimeo www.vimeo.com/12311233")}
     let(:vimeo_without_http) {Conred::Video.new("vimeo.com/12311233")}
-    let(:hacked_viemo_and_youtube_url) {Conred::Video.new("http://www.vimeo.com/12311233http://youtube.com/12311233")}
     
     it "should match youtube video" do
       short_youtube_url.should be_youtube_video
@@ -21,8 +20,6 @@ describe Conred do
     end
 
     it "should check for corner cases" do
-      hacked_viemo_and_youtube_url.should_not be_youtube_video
-      hacked_viemo_and_youtube_url.should_not be_vimeo_video
       evil_vimeo.should_not be_youtube_video
       evil_vimeo.should_not be_vimeo_video
     end
