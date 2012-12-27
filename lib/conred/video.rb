@@ -20,11 +20,11 @@ module Conred
     end
 
     def youtube_video?
-      /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url
+      /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url ? true : false
     end
 
     def vimeo_video?
-      /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url
+      /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url ? true : false
     end
 
 
@@ -40,7 +40,7 @@ module Conred
       if @video_url[/youtu\.be\/([^\?]*)/]
           @youtube_id = $1
       else
-        @video_url[/(v=([A-Za-z0-9_]*))/]
+        @video_url[/(v=([A-Za-z0-9_-]*))/]
         @youtube_id = $2
       end
       youtube_file = "../views/video/youtube_iframe"
