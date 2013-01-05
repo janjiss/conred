@@ -15,13 +15,13 @@ module Conred
       if word_count
         action_view.truncate(text, :length => word_count, :omission => omission).html_safe
       else
-        text.html_safe
+        text.to_s.html_safe
       end
     end
 
     def sanitize_body(text = "")
       text = action_view.sanitize(text, :tags => %w(p a strong ul ol li blockquote strike u em), :attributes => %w(href))
-      text.html_safe
+      text.to_s.html_safe
     end
 
     def external_url(link)
