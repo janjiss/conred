@@ -14,14 +14,12 @@ module Conred
       text = action_view.strip_tags(text)
       if word_count
         action_view.truncate(text, :length => word_count, :omission => omission).html_safe
-      elsif text == nil
-        ""
       else
         text.html_safe
       end
     end
 
-    def sanitize_body(text)
+    def sanitize_body(text = "")
       text = action_view.sanitize(text, :tags => %w(p a strong ul ol li blockquote strike u em), :attributes => %w(href))
       text.html_safe
     end
