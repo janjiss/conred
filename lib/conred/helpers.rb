@@ -13,7 +13,7 @@ module Conred
     def sanitize_and_trim(text = "", word_count = nil, omission = '...')
       text = action_view.strip_tags(text)
       if word_count
-        action_view.truncate(text, :length => word_count, :omission => omission).html_safe
+        action_view.truncate(text, :length => word_count, :omission => omission).to_s.html_safe
       else
         text.to_s.html_safe
       end
