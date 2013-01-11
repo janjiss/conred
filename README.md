@@ -1,8 +1,8 @@
 # Conred
 
 In every project we have common things like video 
-embeding from url, body formating (Of course we hav Textile, but it is not good for all cases),
-external url protocol adding. And here Conred saves the day. 
+embeding from url, body formating (Of course we have Textile, but it is not good for all cases),
+external url protocol adding. These are the cases where Conred saves the day. 
 
 ## Installation
 
