@@ -37,14 +37,8 @@ module Conred
     end
 
     def video_from_youtube_url
-      if @video_url[/youtu\.be\/([^\?]*)/]
-          @youtube_id = $1
-      else
-        @video_url[/(v=([A-Za-z0-9_-]*))/]
-        @youtube_id = $2
-      end
       youtube_file = "../views/video/youtube_iframe"
-      render(youtube_file, :youtube_id => @youtube_id, :height => @height, :width => @width).html_safe
+      render(youtube_file, :youtube_id => youtube_id, :height => @height, :width => @width).html_safe
     end
 
     def render(path_to_partial, locals = {})
@@ -53,6 +47,15 @@ module Conred
         path_to_partial.split("/")
       )
       Haml::Engine.new(File.read("#{path}.html.haml")).render(Object.new, locals)
+    end
+
+    def youtube_id
+      if @video_url[/youtu\.be\/([^\?]*)/]
+        youtube_id = $1
+      else
+        @video_url[/(v=([A-Za-z0-9_-]*))/]
+        youtube_id = $2
+      end
     end
 
   end
