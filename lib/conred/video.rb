@@ -30,16 +30,13 @@ module Conred
 
 
     def video_from_vimeo_url
-      if @video_url[/vimeo\.com\/([0-9]*)/]
-        @vimeo_id = $1
-      end
       vimeo_file = "../views/video/vimeo_iframe"
-      render(vimeo_file, :vimeo_id => @vimeo_id, :height => @height, :width => @width).html_safe
+      render(vimeo_file, :vimeo_id => video_id, :height => @height, :width => @width).html_safe
     end
 
     def video_from_youtube_url
       youtube_file = "../views/video/youtube_iframe"
-      render(youtube_file, :youtube_id => youtube_id, :height => @height, :width => @width).html_safe
+      render(youtube_file, :youtube_id => video_id, :height => @height, :width => @width).html_safe
     end
 
     def render(path_to_partial, locals = {})
@@ -50,22 +47,24 @@ module Conred
       Haml::Engine.new(File.read("#{path}.html.haml")).render(Object.new, locals)
     end
 
-    def youtube_id
-      if @video_url[/youtu\.be\/([^\?]*)/]
-        youtube_id = $1
+    def video_id
+      if @video_url[/vimeo\.com\/([0-9]*)/]
+        video_id = $1
+      elsif @video_url[/youtu\.be\/([^\?]*)/]
+        video_id = $1
       else
         @video_url[/(v=([A-Za-z0-9_-]*))/]
-        youtube_id = $2
+        video_id = $2
       end
     end
 
     def exist?
       if youtube_video?
-        response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{youtube_id}"))
-        response.is_a?(Net::HTTPSuccess)
+        response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{video_id}"))
       else
-        true
+        response = Net::HTTP.get_response(URI("http://vimeo.com/api/v2/video/#{video_id}.json"))
       end
+      response.is_a?(Net::HTTPSuccess)
     end
 
   end
