@@ -40,5 +40,19 @@ describe Conred do
       Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/height='300'/)
       Conred::Video.new("http://google.com/12311233", 450, 300, "Some mistake in url").code.should == "Some mistake in url"
     end
+
+    describe "check if a video exist" do
+      it "should return false if request 404" do
+        non_existing_video = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+        Net::HTTP.stub(:get_response=>Net::HTTPNotFound.new(true, 404, "Not Found"))
+        non_existing_video.exist?.should be_false
+      end
+
+      it "should be true if response is 200" do
+        existing_video = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc")
+        Net::HTTP.stub(:get_response=>Net::HTTPOK.new(true,200,"OK"))
+        existing_video.exist?.should be_true
+      end
+    end
   end
 end
