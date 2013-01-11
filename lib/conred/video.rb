@@ -1,5 +1,6 @@
 require "conred/version"
 require "action_view"
+require "net/http"
 module Conred
   class Video
     def initialize(video_url, width = 670, height = 450, error_message = "Video url you have provided is invalid")
@@ -55,6 +56,15 @@ module Conred
       else
         @video_url[/(v=([A-Za-z0-9_-]*))/]
         youtube_id = $2
+      end
+    end
+
+    def exist?
+      if youtube_video?
+        response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{youtube_id}"))
+        response.is_a?(Net::HTTPSuccess)
+      else
+        true
       end
     end
 
