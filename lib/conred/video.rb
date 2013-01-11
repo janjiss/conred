@@ -32,8 +32,8 @@ module Conred
       if @video_url[/vimeo\.com\/([0-9]*)/]
         @vimeo_id = $1
       end
-      vimeo_file = "../views/video/vimeo_iframe"
-      render(vimeo_file, :vimeo_id => @vimeo_id, :height => @height, :width => @width).html_safe
+      vimeo_iframe = "../views/video/vimeo_iframe"
+      render(vimeo_iframe, :vimeo_id => @vimeo_id, :height => @height, :width => @width).html_safe
     end
 
     def video_from_youtube_url
@@ -43,14 +43,19 @@ module Conred
         @video_url[/(v=([A-Za-z0-9_-]*))/]
         @youtube_id = $2
       end
-      youtube_file = "../views/video/youtube_iframe"
-      render(youtube_file, :youtube_id => @youtube_id, :height => @height, :width => @width).html_safe
+      youtube_iframe = "../views/video/youtube_iframe"
+      render(
+        youtube_iframe, 
+        :youtube_id => @youtube_id, 
+        :height => @height, 
+        :width => @width
+      ).html_safe
     end
 
-    def render(path_to_partial, locals = {})
+    def render(path_to_file, locals = {})
       path = File.join(
         File.dirname(__FILE__),
-        path_to_partial.split("/")
+        path_to_file.split("/")
       )
       Haml::Engine.new(File.read("#{path}.html.haml")).render(Object.new, locals)
     end
