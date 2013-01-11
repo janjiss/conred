@@ -1,8 +1,9 @@
 # Conred
 
 In every project we have common things like video 
-embeding from url, body formating (Of course we have Textile, but it is not good for all cases),
-external url protocol adding. These are the cases where Conred saves the day. 
+embeding from url, user input displaying, formating, trimming stripping,
+external url protocol adding and all that nasty stuff that we write in our apps. 
+These are the cases where Conred saves the day. 
 
 ## Installation
 
@@ -20,20 +21,31 @@ Or install it yourself as:
 
 ## Usage
 
-Right now (version 0.0.8) has several helpers and video class.
-For video you can use:
+### Iframe generetor for Youtube and Vimeo videos:
 
-    c = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc")
+    c = Conred::Video.new(
+      "http://www.youtube.com/watch?v=Lrj5Kxdzouc",
+      width,
+      height,
+      error_message
+    )
     
-Then for embed code:
+__NOTE:__ This constructor type will be deparced in upcoming versions favor of argument hash
+
+Then you can get your ready embed code like this (Conred will recognize video provider by itself):
     
     c.code
     
-You can also check if it is youtube video or vimeo video like this:
+You can also check if it is youtube or vimeo video like this:
 
     c.youtube_video? ==> true
     c.vimeo_video? ==> false
-Currently video feature works with Youtube and Vimeo URL's
+    
+Or if it exists:
+
+    c.exists? ==> true
+
+### General helpers for rails app
     
 If you wish to use text helpers then in your application_helper add this include line:
 
@@ -51,8 +63,7 @@ Sanitizes body, allowed tags are(p a strong ul ol li blockquote strike u em):
     
 External link formating
 
-    external_url("www.google.lv") => "http://www.google.lv"
-
+    external_url("www.google.com") => "http://www.google.com"
 
 ## Contributing
 
