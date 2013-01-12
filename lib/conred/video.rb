@@ -21,13 +21,12 @@ module Conred
     end
 
     def youtube_video?
-      /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url ? true : false
+      /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url
     end
 
     def vimeo_video?
-      /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url ? true : false
+      /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url
     end
-
 
     def video_from_vimeo_url
       vimeo_partial = "../views/video/vimeo_iframe"
