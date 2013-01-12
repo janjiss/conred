@@ -2,78 +2,111 @@ require "conred/version"
 require "action_view"
 require "net/http"
 module Conred
-  class Video
+  module Video
     def initialize(arguments = {:width => 670, :height => 450, :error_message => "Video url you have provided is invalid"})
       @width = arguments[:width]
       @height = arguments[:height]
-      @video_url = arguments[:video_url]
       @error_message = arguments[:error_message]
-    end
-
-    def code
-      if youtube_video?
-        video_from_youtube_url
-      elsif vimeo_video?
-        video_from_vimeo_url
-      else
-        @error_message
-      end
+      @video_id = get_video_id_from arguments[:video_url]
     end
 
     def youtube_video?
-      /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ @video_url
+      is_a?(Video::Youtube)
     end
 
     def vimeo_video?
-      /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ @video_url
+      is_a?(Video::Vimeo)
     end
 
-    def video_from_vimeo_url
-      vimeo_partial = "../views/video/vimeo_iframe"
+    def code
       render(
-        vimeo_partial, 
-        :vimeo_id => video_id, 
-        :height => @height, 
-        :width => @width
-      ).html_safe
-    end
-
-    def video_from_youtube_url
-      youtube_partial = "../views/video/youtube_iframe"
-      render(
-        youtube_partial,
-        :youtube_id => video_id,
+        :video_link => video_link,
         :height => @height,
         :width => @width
       ).html_safe
     end
 
-    def render(path_to_partial, locals = {})
+    def render(locals = {})
       path = File.join(
         File.dirname(__FILE__),
-        path_to_partial.split("/")
+        "../views/video/video_iframe".split("/")
       )
       Haml::Engine.new(File.read("#{path}.html.haml")).render(Object.new, locals)
     end
 
-    def video_id
-      if @video_url[/vimeo\.com\/([0-9]*)/]
-        video_id = $1
-      elsif @video_url[/youtu\.be\/([^\?]*)/]
-        video_id = $1
-      else
-        @video_url[/(v=([A-Za-z0-9_-]*))/]
-        video_id = $2
+    class Youtube
+      include Video
+
+      def exist?
+        response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{@video_id}"))
+        response.is_a?(Net::HTTPSuccess)
+      end
+
+      def video_link
+        "http://www.youtube.com/embed/#{@video_id}?wmode=transparent"
+      end
+
+      private
+
+      def get_video_id_from url
+        if url[/youtu\.be\/([^\?]*)/]
+          video_id = $1
+        else
+          url[/(v=([A-Za-z0-9_-]*))/]
+          video_id = $2
+        end
       end
     end
 
-    def exist?
-      if youtube_video?
-        response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{video_id}"))
-      else
-        response = Net::HTTP.get_response(URI("http://vimeo.com/api/v2/video/#{video_id}.json"))
+    class Vimeo
+      include Video
+
+      def exist?
+        response = Net::HTTP.get_response(URI("http://vimeo.com/api/v2/video/#{@video_id}.json"))
+        response.is_a?(Net::HTTPSuccess)
       end
-      response.is_a?(Net::HTTPSuccess)
+
+      def video_link
+        "http://player.vimeo.com/video/#{@video_id}"
+      end
+
+      private
+
+      def get_video_id_from url
+        url[/vimeo\.com\/([0-9]*)/]
+        video_id = $1
+      end
+    end
+
+    class Other
+      include Video
+      def initialize(arguments = {:error_message => "Video url you have provided is invalid"})
+        @error_message = arguments[:error_message]
+      end
+
+      def code
+        @error_message
+      end
     end
   end
+
+
+  def Video.new arguments
+    if Conred.youtube_video? arguments[:video_url]
+      Video::Youtube.new arguments
+    elsif Conred.vimeo_video? arguments[:video_url]
+      Video::Vimeo.new arguments
+    else
+      Video::Other.new arguments
+    end
+  end
+
+  def self.youtube_video? url
+    /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ url
+  end
+
+  def self.vimeo_video? url
+    /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ url
+  end
+
 end
