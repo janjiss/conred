@@ -3,11 +3,11 @@ require "action_view"
 require "net/http"
 module Conred
   class Video
-    def initialize(video_url, width = 670, height = 450, error_message = "Video url you have provided is invalid")
-      @width = width
-      @height = height
-      @video_url = video_url
-      @error_message = error_message
+    def initialize(arguments = {:width => 670, :height => 450, :error_message => "Video url you have provided is invalid"})
+      @width = arguments[:width]
+      @height = arguments[:height]
+      @video_url = arguments[:video_url]
+      @error_message = arguments[:error_message]
     end
 
     def code
@@ -75,6 +75,5 @@ module Conred
       end
       response.is_a?(Net::HTTPSuccess)
     end
-
   end
 end
