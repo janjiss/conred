@@ -3,14 +3,14 @@ require "conred"
 describe Conred do
   describe Conred::Video do
 
-    let(:short_youtube_url) {Conred::Video.new("http://youtu.be/SZt5RFzqEfY")}
-    let(:short_youtube_url_with_www) {Conred::Video.new("www.youtu.be/SZt5RFzqEfY")}
-    let(:long_youtube_url_with_features) {Conred::Video.new("http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc")}
-    let(:short_youtube_url_without_http_and_www) {Conred::Video.new("youtu.be/SZt5RFzqEfY")}
+    let(:short_youtube_url) {Conred::Video.new(:video_url=>"http://youtu.be/SZt5RFzqEfY")}
+    let(:short_youtube_url_with_www) {Conred::Video.new(:video_url=>"www.youtu.be/SZt5RFzqEfY")}
+    let(:long_youtube_url_with_features) {Conred::Video.new(:video_url=>"http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc")}
+    let(:short_youtube_url_without_http_and_www) {Conred::Video.new(:video_url=>"youtu.be/SZt5RFzqEfY")}
 
-    let(:vimeo_url) {Conred::Video.new("http://vimeo.com/12311233")}
-    let(:evil_vimeo) {Conred::Video.new("eeevil vimeo www.vimeo.com/12311233")}
-    let(:vimeo_without_http) {Conred::Video.new("vimeo.com/12311233")}
+    let(:vimeo_url) {Conred::Video.new(:video_url=>"http://vimeo.com/12311233")}
+    let(:evil_vimeo) {Conred::Video.new(:video_url=>"eeevil vimeo www.vimeo.com/12311233")}
+    let(:vimeo_without_http) {Conred::Video.new(:video_url=>"vimeo.com/12311233")}
     
     it "should match youtube video" do
       short_youtube_url.should be_youtube_video
@@ -30,26 +30,42 @@ describe Conred do
       vimeo_url.should be_vimeo_video
     end  
 
-    it "should return correct embed code" do
-      Conred::Video.new("http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc", 450, 300).code.should match(/Lrj5Kxdzouc/)
-      Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should match(/Lrj5Kxdzouc/)
-      Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should match(/width='450'/)
-      Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc", 450, 300).code.should match(/height='300'/)
-      Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/49556689/)
-      Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/width='450'/)
-      Conred::Video.new("http://vimeo.com/49556689", 450, 300).code.should match(/height='300'/)
-      Conred::Video.new("http://google.com/12311233", 450, 300, "Some mistake in url").code.should == "Some mistake in url"
+    describe "youtube embed code" do
+      subject {Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc", :width=>450,:height=> 300).code }
+      it { should match(/Lrj5Kxdzouc/)}
+      it { should match(/width='450'/)}
+      it {should match(/height='300'/)} 
+    end
+
+    describe "vimeo embed code" do
+      subject { Conred::Video.new(:video_url=>"http://vimeo.com/49556689", :width=>450, :height=>300).code }
+      it {should match(/49556689/)}
+      it {should match(/width='450'/)}
+      it {should match(/height='300'/)}
+    end
+
+    it "should render error message when url is invalid" do
+      Conred::Video.new(:video_url=>"http://google.com/12311233", :width=>450, :height=>300, :error_message=>"Some mistake in url").code.should == "Some mistake in url"
+    end
+
+    it "should return correct embed code when passing arguments in url" do
+      Conred::Video.new(:video_url=>"http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc",:width=> 450,:height=> 300).code.should match(/Lrj5Kxdzouc/)
     end
 
     describe "check if a video exist" do
       it "should return false if request 404" do
-        non_existing_video = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+        non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
         Net::HTTP.stub(:get_response=>Net::HTTPNotFound.new(true, 404, "Not Found"))
         non_existing_video.exist?.should be_false
       end
 
+      it "should make a request to the proper uri" do
+        non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+        non_existing_video.api_uri.should eq("http://gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+      end
+
       it "should be true if response is 200" do
-        existing_video = Conred::Video.new("http://www.youtube.com/watch?v=Lrj5Kxdzouc")
+        existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
         Net::HTTP.stub(:get_response=>Net::HTTPOK.new(true,200,"OK"))
         existing_video.exist?.should be_true
       end
