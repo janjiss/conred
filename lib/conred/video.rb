@@ -37,6 +37,10 @@ module Conred
     class Youtube
       include Video
 
+      def self.url_format_is_valid? url
+        /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ url
+      end
+
       def exist?
         response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{@video_id}"))
         response.is_a?(Net::HTTPSuccess)
@@ -60,6 +64,10 @@ module Conred
 
     class Vimeo
       include Video
+
+      def self.url_format_is_valid? url
+        /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ url
+      end
 
       def exist?
         response = Net::HTTP.get_response(URI("http://vimeo.com/api/v2/video/#{@video_id}.json"))
@@ -89,24 +97,4 @@ module Conred
       end
     end
   end
-
-
-  def Video.new arguments
-    if Conred.youtube_video? arguments[:video_url]
-      Video::Youtube.new arguments
-    elsif Conred.vimeo_video? arguments[:video_url]
-      Video::Vimeo.new arguments
-    else
-      Video::Other.new arguments
-    end
-  end
-
-  def self.youtube_video? url
-    /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ url
-  end
-
-  def self.vimeo_video? url
-    /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ url
-  end
-
 end
