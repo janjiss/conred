@@ -26,6 +26,13 @@ module Conred
       ).html_safe
     end
 
+    def exist?
+      response = Net::HTTP.get_response(URI(api_uri))
+      response.is_a?(Net::HTTPSuccess)
+    end
+
+    private
+
     def render(locals = {})
       path = File.join(
         File.dirname(__FILE__),
@@ -41,9 +48,8 @@ module Conred
         /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ url
       end
 
-      def exist?
-        response = Net::HTTP.get_response(URI("http://gdata.youtube.com/feeds/api/videos/#{@video_id}"))
-        response.is_a?(Net::HTTPSuccess)
+      def api_uri
+        "http://gdata.youtube.com/feeds/api/videos/#{@video_id}"
       end
 
       def video_link
@@ -69,9 +75,8 @@ module Conred
         /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ url
       end
 
-      def exist?
-        response = Net::HTTP.get_response(URI("http://vimeo.com/api/v2/video/#{@video_id}.json"))
-        response.is_a?(Net::HTTPSuccess)
+      def api_uri
+        "http://vimeo.com/api/v2/video/#{@video_id}.json"
       end
 
       def video_link

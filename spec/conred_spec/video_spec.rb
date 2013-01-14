@@ -59,6 +59,11 @@ describe Conred do
         non_existing_video.exist?.should be_false
       end
 
+      it "should make a request to the proper uri" do
+        non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+        non_existing_video.api_uri.should eq("http://gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+      end
+
       it "should be true if response is 200" do
         existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
         Net::HTTP.stub(:get_response=>Net::HTTPOK.new(true,200,"OK"))
