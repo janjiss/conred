@@ -24,13 +24,13 @@ Or install it yourself as:
 ### Iframe generetor for Youtube and Vimeo videos:
 
     c = Conred::Video.new(
-      "http://www.youtube.com/watch?v=Lrj5Kxdzouc",
-      width,
-      height,
-      error_message
+      video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
+      width: 285, 
+      height: 185,
+      error_message: "Video url is invalid"
     )
     
-__NOTE:__ This constructor type will be deparced in upcoming versions favor of argument hash
+__NOTE:__ This is new constructor type as of version 0.3.0. 
 
 Then you can get your ready embed code like this (Conred will recognize video provider by itself):
     
@@ -72,3 +72,9 @@ External link formating
 3. Create tests for it (Important!)
 4. Create new Pull Request
 5. Be happy
+
+## Thank you's
+
+I would like to thank these guys for contributing:
+@alexcp
+@barisbalic
