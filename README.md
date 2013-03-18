@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/janjiss/conred.png)](https://codeclimate.com/github/janjiss/conred)
+
 # Conred
 
 In every project we have common things like video 
