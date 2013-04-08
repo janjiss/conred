@@ -1,4 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/janjiss/conred.png)](https://codeclimate.com/github/janjiss/conred)
+[![Build Status](https://travis-ci.org/janjiss/conred.png?branch=master)](https://travis-ci.org/janjiss/conred)
 
 # Conred
 
