@@ -81,3 +81,4 @@ External link formating
 I would like to thank these guys for contributing:
 @alexcp
 @barisbalic
+@danielnolan
