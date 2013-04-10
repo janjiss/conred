@@ -45,15 +45,15 @@ module Conred
       include Video
 
       def self.url_format_is_valid? url
-        /^(http:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ url
+        /^(http|https)*(:\/\/)*(www\.)*(youtube.com|youtu.be)/ =~ url
       end
 
       def api_uri
-        "http://gdata.youtube.com/feeds/api/videos/#{@video_id}"
+        "//gdata.youtube.com/feeds/api/videos/#{@video_id}"
       end
 
       def video_link
-        "http://www.youtube.com/embed/#{@video_id}?wmode=transparent"
+        "//www.youtube.com/embed/#{@video_id}?wmode=transparent"
       end
 
       private
@@ -72,15 +72,15 @@ module Conred
       include Video
 
       def self.url_format_is_valid? url
-        /^(http:\/\/)*(www\.)*(vimeo.com)/ =~ url
+        /^(http|https)*(:\/\/)*(www\.)*(vimeo.com)/ =~ url
       end
 
       def api_uri
-        "http://vimeo.com/api/v2/video/#{@video_id}.json"
+        "//vimeo.com/api/v2/video/#{@video_id}.json"
       end
 
       def video_link
-        "http://player.vimeo.com/video/#{@video_id}"
+        "//player.vimeo.com/video/#{@video_id}"
       end
 
       private
