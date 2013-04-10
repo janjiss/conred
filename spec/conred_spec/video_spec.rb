@@ -4,16 +4,19 @@ describe Conred do
   describe Conred::Video do
 
     let(:short_youtube_url) {Conred::Video.new(:video_url=>"http://youtu.be/SZt5RFzqEfY")}
+    let(:https_youtube_url) {Conred::Video.new(:video_url=>"https://youtu.be/SZt5RFzqEfY")}
     let(:short_youtube_url_with_www) {Conred::Video.new(:video_url=>"www.youtu.be/SZt5RFzqEfY")}
     let(:long_youtube_url_with_features) {Conred::Video.new(:video_url=>"http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc")}
     let(:short_youtube_url_without_http_and_www) {Conred::Video.new(:video_url=>"youtu.be/SZt5RFzqEfY")}
 
     let(:vimeo_url) {Conred::Video.new(:video_url=>"http://vimeo.com/12311233")}
+    let(:https_vimeo_url) {Conred::Video.new(:video_url=>"http://vimeo.com/12311233")}
     let(:evil_vimeo) {Conred::Video.new(:video_url=>"eeevil vimeo www.vimeo.com/12311233")}
     let(:vimeo_without_http) {Conred::Video.new(:video_url=>"vimeo.com/12311233")}
     
     it "should match youtube video" do
       short_youtube_url.should be_youtube_video
+      https_youtube_url.should be_youtube_video
       short_youtube_url_with_www.should be_youtube_video
       long_youtube_url_with_features.should be_youtube_video
       short_youtube_url_without_http_and_www.should be_youtube_video
@@ -27,6 +30,7 @@ describe Conred do
     it "should match vimeo video" do
       vimeo_url.should_not be_youtube_video
       vimeo_without_http.should be_vimeo_video
+      https_vimeo_url.should be_vimeo_video
       vimeo_url.should be_vimeo_video
     end  
 
@@ -61,7 +65,7 @@ describe Conred do
 
       it "should make a request to the proper uri" do
         non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        non_existing_video.api_uri.should eq("http://gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+        non_existing_video.api_uri.should eq("//gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
       end
 
       it "should be true if response is 200" do
