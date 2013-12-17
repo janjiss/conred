@@ -4,7 +4,7 @@
 # Conred
 
 In every project we have common things like video 
-embeding from url, user input displaying, formating, trimming stripping,
+embedding from url, user input displaying, formatting, trimming stripping,
 external url protocol adding and all that nasty stuff that we write in our apps. 
 These are the cases where Conred saves the day. 
 
@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ## Usage
 
-### Iframe generetor for Youtube and Vimeo videos:
+### Iframe generator for Youtube and Vimeo videos:
 
     c = Conred::Video.new(
       video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
@@ -64,7 +64,7 @@ Sanitizes body, allowed tags are(p a strong ul ol li blockquote strike u em):
 
     sanitize_body("<html><strong>string</strong> <p>with<p></html>") => "<strong>string</strong> <p>with<p>"
     
-External link formating
+External link formatting
 
     external_url("www.google.com") => "http://www.google.com"
 
