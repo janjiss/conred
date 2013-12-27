@@ -10,6 +10,16 @@ module Conred
       @video_id = get_video_id_from arguments[:video_url]
     end
 
+    def self.new arguments
+      if Youtube.url_format_is_valid? arguments[:video_url]
+        Youtube.new arguments
+      elsif Video::Vimeo.url_format_is_valid? arguments[:video_url]
+        Vimeo.new arguments
+      else
+        Other.new arguments
+      end
+    end
+
     def youtube_video?
       is_a?(Video::Youtube)
     end
@@ -87,7 +97,7 @@ module Conred
 
       def get_video_id_from url
         url[/vimeo\.com\/([0-9]*)/]
-        video_id = $1
+        @video_id = $1
       end
     end
 
