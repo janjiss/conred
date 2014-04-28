@@ -92,8 +92,4 @@ external_url("www.google.com") => "http://www.google.com"
 
 ## Thank you's
 
-I would like to thank these guys for contributing:
-@alexcp
-@barisbalic
-@danielnolan
-@jordanbyron
+Please stand up from your chair and applaud to these guys: https://github.com/janjiss/conred/graphs/contributors
