@@ -13,7 +13,12 @@ describe Conred do
     let(:https_vimeo_url) {Conred::Video.new(:video_url=>"http://vimeo.com/12311233")}
     let(:evil_vimeo) {Conred::Video.new(:video_url=>"eeevil vimeo www.vimeo.com/12311233")}
     let(:vimeo_without_http) {Conred::Video.new(:video_url=>"vimeo.com/12311233")}
-    
+
+    let(:error_video) { Conred::Video.new(
+      :video_url => "http://google.com/12311233",
+      :error_message => "Some mistake in url")
+    }
+
     it "should match youtube video" do
       short_youtube_url.should be_youtube_video
       https_youtube_url.should be_youtube_video
@@ -32,13 +37,13 @@ describe Conred do
       vimeo_without_http.should be_vimeo_video
       https_vimeo_url.should be_vimeo_video
       vimeo_url.should be_vimeo_video
-    end  
+    end
 
     describe "youtube embed code" do
       subject {Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc", :width=>450,:height=> 300).code }
       it { should match(/Lrj5Kxdzouc/)}
       it { should match(/width='450'/)}
-      it {should match(/height='300'/)} 
+      it {should match(/height='300'/)}
     end
 
     describe "vimeo embed code" do
@@ -49,7 +54,7 @@ describe Conred do
     end
 
     it "should render error message when url is invalid" do
-      Conred::Video.new(:video_url=>"http://google.com/12311233", :width=>450, :height=>300, :error_message=>"Some mistake in url").code.should == "Some mistake in url"
+      error_video.code.should == "Some mistake in url"
     end
 
     it "should return correct embed code when passing arguments in url" do
@@ -72,6 +77,10 @@ describe Conred do
         existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
         Net::HTTP.stub(:get_response=>Net::HTTPOK.new(true,200,"OK"))
         existing_video.exist?.should be_true
+      end
+
+      it "should be false if uri isn't recognized" do
+        error_video.exist?.should be_false
       end
     end
   end
