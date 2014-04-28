@@ -1,3 +1,3 @@
 module Conred
-  VERSION = "0.2.8"
+  VERSION = "0.4.0"
 end
