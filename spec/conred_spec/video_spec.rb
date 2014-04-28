@@ -42,15 +42,15 @@ describe Conred do
     describe "youtube embed code" do
       subject {Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc", :width=>450,:height=> 300).code }
       it { should match(/Lrj5Kxdzouc/)}
-      it { should match(/width='450'/)}
-      it {should match(/height='300'/)}
+      it { should match(/width="450"/)}
+      it {should match(/height="300"/)}
     end
 
     describe "vimeo embed code" do
       subject { Conred::Video.new(:video_url=>"http://vimeo.com/49556689", :width=>450, :height=>300).code }
       it {should match(/49556689/)}
-      it {should match(/width='450'/)}
-      it {should match(/height='300'/)}
+      it {should match(/width="450"/)}
+      it {should match(/height="300"/)}
     end
 
     it "should render error message when url is invalid" do
