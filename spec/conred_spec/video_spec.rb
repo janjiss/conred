@@ -64,7 +64,6 @@ describe Conred do
     describe "check if a video exist" do
       it "should return false if request 404" do
         non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        Net::HTTP.stub(:get_response=>Net::HTTPNotFound.new(true, 404, "Not Found"))
         non_existing_video.exist?.should be_false
       end
 
@@ -75,7 +74,6 @@ describe Conred do
 
       it "should be true if response is 200" do
         existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
-        Net::HTTP.stub(:get_response=>Net::HTTPOK.new(true,200,"OK"))
         existing_video.exist?.should be_true
       end
 

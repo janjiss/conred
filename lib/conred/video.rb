@@ -37,7 +37,7 @@ module Conred
     end
 
     def exist?
-      response = Net::HTTP.get_response(URI(api_uri))
+      response = Net::HTTP.get_response(URI("https:#{api_uri}"))
       response.is_a?(Net::HTTPSuccess)
     end
 
