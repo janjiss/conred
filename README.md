@@ -3,10 +3,7 @@
 
 # Conred
 
-In every project we have common things like video 
-embedding from url, user input displaying, formatting, trimming stripping,
-external url protocol adding and all that nasty stuff that we write in our apps. 
-These are the cases where Conred saves the day. 
+You often have to embed video from youtube and vimeo to your web site? Wouldn't it be nice if we had a gem that could make video embeding from URL's easy as pie? BOOM. Here you go.
 
 ## Installation
 
