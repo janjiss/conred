@@ -54,34 +54,6 @@ Or if it exists:
 c.exists? ==> true
 ```
 
-### General helpers for rails app
-    
-If you wish to use text helpers then in your application_helper add this include line:
-
-```ruby
-include Conred::Helpers
-```
-
-Now you have these methods available to you:
-
-Sanitizes all html and trims content if count is provided:
-    
-```ruby
-sanitize_and_trim("<html>string with", 10) => "string ..."
-```
-    
-Sanitizes body, allowed tags are(p a strong ul ol li blockquote strike u em):
-
-```ruby
-sanitize_body("<html><strong>string</strong> <p>with<p></html>") => "<strong>string</strong> <p>with<p>"
-```
-    
-External link formatting
-
-```ruby
-external_url("www.google.com") => "http://www.google.com"
-```
-
 ## Contributing
 
 1. Fork it
