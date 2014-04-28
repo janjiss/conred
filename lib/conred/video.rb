@@ -110,6 +110,10 @@ module Conred
       def code
         @error_message
       end
+
+      def exist?
+        false
+      end
     end
   end
 end
