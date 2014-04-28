@@ -1,6 +1,7 @@
 require "conred/version"
 require "action_view"
 require "net/http"
+require "typhoeus"
 module Conred
   module Video
     def initialize(arguments = {:width => 670, :height => 450, :error_message => "Video url you have provided is invalid"})
@@ -37,8 +38,8 @@ module Conred
     end
 
     def exist?
-      response = Net::HTTP.get_response(URI("https:#{api_uri}"))
-      response.is_a?(Net::HTTPSuccess)
+      response = Typhoeus.get("https:#{api_uri}")
+      response.code == 200
     end
 
     private

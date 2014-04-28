@@ -9,9 +9,10 @@ Gem::Specification.new do |gem|
   gem.homepage      = "http://github.com/janjiss/conred"
 
   gem.add_dependency "haml", '~> 3'
+  gem.add_dependency "typhoeus", '~> 0.6'
+  gem.add_dependency "actionpack", '~> 3'
   gem.add_development_dependency "rspec", '~> 2.0'
   gem.add_development_dependency "rake", '~> 10.1'
-  gem.add_development_dependency "actionpack", '~> 3'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
