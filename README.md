@@ -26,61 +26,61 @@ Or install it yourself as:
 
 ### Iframe generator for Youtube and Vimeo videos:
 
-'''ruby
+```ruby
 c = Conred::Video.new(
 	video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
 	width: 285, 
 	height: 185,
 	error_message: "Video url is invalid"
 )
-'''
+```
 
 Then you can get your ready embed code like this (Conred will recognize video provider by itself):
 
-'''ruby
+```ruby
 c.code
-'''
+```
     
 You can also check if it is youtube or vimeo video like this:
 
-'''ruby
+```ruby
 c.youtube_video? ==> true
 c.vimeo_video? ==> false
-'''
+```
     
 Or if it exists:
 
-'''ruby
+```ruby
 c.exists? ==> true
-'''
+```
 
 ### General helpers for rails app
     
 If you wish to use text helpers then in your application_helper add this include line:
 
-'''ruby
+```ruby
 include Conred::Helpers
-'''
+```
 
 Now you have these methods available to you:
 
 Sanitizes all html and trims content if count is provided:
     
-'''ruby
+```ruby
 sanitize_and_trim("<html>string with", 10) => "string ..."
-'''
+```
     
 Sanitizes body, allowed tags are(p a strong ul ol li blockquote strike u em):
 
-'''ruby
+```ruby
 sanitize_body("<html><strong>string</strong> <p>with<p></html>") => "<strong>string</strong> <p>with<p>"
-'''
+```
     
 External link formatting
 
-'''ruby
+```ruby
 external_url("www.google.com") => "http://www.google.com"
-'''
+```
 
 ## Contributing
 
