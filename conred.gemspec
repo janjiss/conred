@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Janis Miezitis"]
   gem.email         = ["janjiss@gmail.com"]
   gem.description   = %q{Safely and easily embed videos}
-  gem.summary       = %q{Safely and easily embed YouTube and Videmo videos}
+  gem.summary       = %q{Safely and easily embed YouTube and Vimeo videos}
   gem.homepage      = "http://github.com/janjiss/conred"
 
   gem.add_development_dependency "rspec", '~> 2.0'
