@@ -20,65 +20,69 @@ describe Conred do
     }
 
     it "should match youtube video" do
-      short_youtube_url.should be_youtube_video
-      https_youtube_url.should be_youtube_video
-      short_youtube_url_with_www.should be_youtube_video
-      long_youtube_url_with_features.should be_youtube_video
-      short_youtube_url_without_http_and_www.should be_youtube_video
+      expect(short_youtube_url).to be_youtube_video
+      expect(https_youtube_url).to be_youtube_video 
+      expect(short_youtube_url_with_www).to be_youtube_video
+      expect(long_youtube_url_with_features).to be_youtube_video
+      expect(short_youtube_url_without_http_and_www).to be_youtube_video
     end
 
     it "should check for corner cases" do
-      evil_vimeo.should_not be_youtube_video
-      evil_vimeo.should_not be_vimeo_video
+      expect(evil_vimeo).to_not be_youtube_video
+      expect(evil_vimeo).to_not be_vimeo_video
     end
 
     it "should match vimeo video" do
-      vimeo_url.should_not be_youtube_video
-      vimeo_without_http.should be_vimeo_video
-      https_vimeo_url.should be_vimeo_video
-      vimeo_url.should be_vimeo_video
+      expect(vimeo_url).to_not be_youtube_video
+      expect(vimeo_without_http).to be_vimeo_video
+      expect(https_vimeo_url).to be_vimeo_video
+      expect(vimeo_url).to be_vimeo_video
     end
 
     describe "youtube embed code" do
       subject {Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc", :width=>450,:height=> 300).code }
-      it { should match(/Lrj5Kxdzouc/)}
-      it { should match(/width='450'/)}
-      it {should match(/height='300'/)}
+      it "matches to correct html" do
+        expect(subject).to match(/Lrj5Kxdzouc/)
+        expect(subject).to match(/width="450"/)
+        expect(subject).to match(/height="300"/)
+      end
     end
 
     describe "vimeo embed code" do
       subject { Conred::Video.new(:video_url=>"http://vimeo.com/49556689", :width=>450, :height=>300).code }
-      it {should match(/49556689/)}
-      it {should match(/width='450'/)}
-      it {should match(/height='300'/)}
+      it "matches to correct html" do
+        expect(subject).to match(/49556689/)
+        expect(subject).to match(/width="450"/)
+        expect(subject).to match(/height="300"/)
+      end
     end
 
     it "should render error message when url is invalid" do
-      error_video.code.should == "Some mistake in url"
+      expect(error_video.code).to eq("Some mistake in url")
     end
 
     it "should return correct embed code when passing arguments in url" do
-      Conred::Video.new(:video_url=>"http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc",:width=> 450,:height=> 300).code.should match(/Lrj5Kxdzouc/)
+      expect(Conred::Video.new(:video_url=>"http://www.youtube.com/watch?NR=1&feature=endscreen&v=Lrj5Kxdzouc",:width=> 450,:height=> 300).code).to match(/Lrj5Kxdzouc/)
     end
 
     describe "check if a video exist" do
       it "should return false if request 404" do
         non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        non_existing_video.exist?.should be_false
+        expect(non_existing_video.exist?).to eq(false)
       end
 
       it "should make a request to the proper uri" do
         non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        non_existing_video.api_uri.should eq("//gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+        expect(non_existing_video.api_uri).to eq("//gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
       end
 
       it "should be true if response is 200" do
         existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
-        existing_video.exist?.should be_true
+        expect(existing_video.exist?).to eq(true)
       end
 
       it "should be false if uri isn't recognized" do
-        error_video.exist?.should be_false
+        expect(error_video.exist?).to eq(false)
       end
     end
   end

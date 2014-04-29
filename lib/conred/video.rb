@@ -1,17 +1,17 @@
 require "conred/version"
-require "action_view"
 require "net/http"
-require "typhoeus"
+require "erb"
+
 module Conred
   module Video
-    def initialize(arguments = {:width => 670, :height => 450, :error_message => "Video url you have provided is invalid"})
-      @width = arguments[:width]
-      @height = arguments[:height]
-      @error_message = arguments[:error_message]
-      @video_id = get_video_id_from arguments[:video_url]
+    def initialize(options = {})
+      @width         = options.fetch(:width, 670)
+      @height        = options.fetch(:height, 450)
+      @error_message = options.fetch(:error_message, "Invalid video url")
+      @video_id      = get_video_id_from(options[:video_url])
     end
 
-    def self.new arguments
+    def self.new(arguments)
       if Youtube.url_format_is_valid? arguments[:video_url]
         Youtube.new arguments
       elsif Video::Vimeo.url_format_is_valid? arguments[:video_url]
@@ -30,27 +30,22 @@ module Conred
     end
 
     def code
-      render(
-        :video_link => video_link,
-        :height => @height,
-        :width => @width
-      ).html_safe
+      view_path = File.join(
+        File.dirname(__FILE__),
+        "../views/video/video_iframe.html.erb"
+      )
+      template = ERB.new(File.read(view_path))
+      template.result(binding)
     end
 
     def exist?
-      response = Typhoeus.get("https:#{api_uri}")
-      response.code == 200
+      response = Net::HTTP.get_response(URI("http:#{api_uri}"))
+      response.is_a?(Net::HTTPSuccess)
     end
+
+    attr_reader :height, :width, :video_id, :error_message
 
     private
-
-    def render(locals = {})
-      path = File.join(
-        File.dirname(__FILE__),
-        "../views/video/video_iframe".split("/")
-      )
-      Haml::Engine.new(File.read("#{path}.html.haml")).render(Object.new, locals)
-    end
 
     class Youtube
       include Video

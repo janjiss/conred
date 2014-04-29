@@ -4,13 +4,10 @@ require File.expand_path('../lib/conred/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Janis Miezitis"]
   gem.email         = ["janjiss@gmail.com"]
-  gem.description   = %q{Gem to remove repetative tasks}
-  gem.summary       = %q{Comrades are for reusable code}
+  gem.description   = %q{Safely and easily embed videos}
+  gem.summary       = %q{Safely and easily embed YouTube and Vimeo videos}
   gem.homepage      = "http://github.com/janjiss/conred"
 
-  gem.add_dependency "haml", '~> 3'
-  gem.add_dependency "typhoeus", '~> 0.6'
-  gem.add_dependency "actionpack", '~> 3'
   gem.add_development_dependency "rspec", '~> 2.0'
   gem.add_development_dependency "rake", '~> 10.1'
 

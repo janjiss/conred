@@ -3,10 +3,7 @@
 
 # Conred
 
-In every project we have common things like video 
-embedding from url, user input displaying, formatting, trimming stripping,
-external url protocol adding and all that nasty stuff that we write in our apps. 
-These are the cases where Conred saves the day. 
+Easily and safely embed YouTube and Vimeo videos in your applications.
 
 ## Installation
 
@@ -24,21 +21,20 @@ Or install it yourself as:
 
 ## Usage
 
-### Iframe generator for Youtube and Vimeo videos:
-
 ```ruby
 c = Conred::Video.new(
-	video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
-	width: 285, 
-	height: 185,
-	error_message: "Video url is invalid"
+  video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
+  width: 285, 
+  height: 185,
+  error_message: "Video url is invalid"
 )
 ```
 
 Then you can get your ready embed code like this (Conred will recognize video provider by itself):
 
 ```ruby
-c.code
+# In your Rails view you will need to append .html_safe
+c.code.html_safe
 ```
     
 You can also check if it is youtube or vimeo video like this:
