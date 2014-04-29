@@ -3,7 +3,7 @@
 
 # Conred
 
-Easily and safely embed YouTube and Vimeo videos in your applications.
+You often have to embed video from youtube and vimeo to your web site? Wouldn't it be nice if we had a gem that could make video embeding from URL's easy as pie? BOOM. Here you go.
 
 ## Installation
 
@@ -21,12 +21,14 @@ Or install it yourself as:
 
 ## Usage
 
+### Iframe generator for Youtube and Vimeo videos:
+
 ```ruby
 c = Conred::Video.new(
-  video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
-  width: 285, 
-  height: 185,
-  error_message: "Video url is invalid"
+	video_url: "http://www.youtube.com/watch?v=tNtW9pGFPTA&feature=plcp", 
+	width: 285, 
+	height: 185,
+	error_message: "Video url is invalid"
 )
 ```
 
@@ -47,7 +49,7 @@ c.vimeo_video? ==> false
 Or if it exists:
 
 ```ruby
-c.exists? ==> true
+c.exists? # => true
 ```
 
 ## Contributing
