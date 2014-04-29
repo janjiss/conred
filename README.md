@@ -42,8 +42,8 @@ c.code.html_safe
 You can also check if it is youtube or vimeo video like this:
 
 ```ruby
-c.youtube_video? ==> true
-c.vimeo_video? ==> false
+c.youtube_video? #=> true
+c.vimeo_video? #=> false
 ```
     
 Or if it exists:
