@@ -1,2 +1,5 @@
 require "conred/version"
 require "conred/video"
+require "conred/generator_strategies/youtube_strategy"
+require "conred/generator_strategies/vimeo_strategy"
+require "conred/generator_strategies/other_strategy"
