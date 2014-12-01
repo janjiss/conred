@@ -67,13 +67,18 @@ describe Conred do
 
     describe "check if a video exist" do
       it "should return false if request 404" do
-        non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+          non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
         expect(non_existing_video.exist?).to eq(false)
       end
 
-      it "should make a request to the proper uri" do
-        non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        expect(non_existing_video.api_uri).to eq("//gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+      it "should make a request to the proper youtube uri" do
+        non_existing_youtube_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+        expect(non_existing_youtube_video.api_uri).to eq("//gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+      end
+
+      it "should make a request to the proper vimeo uri" do
+        non_existing_vimeo_video = Conred::Video.new(:video_url=>"http://vimeo.com/49556689")
+        expect(non_existing_vimeo_video.api_uri).to eq("//vimeo.com/api/v2/video/49556689.json")
       end
 
       it "should be true if response is 200" do
