@@ -16,8 +16,8 @@ module Conred
 
     def self.new(arguments)
       available_strategies = [YoutubeStrategy,Video::VimeoStrategy,Video::OtherStrategy]
-      strategy = available_strategies.select { |strategy| strategy.url_format_is_valid?(arguments[:video_url])}.first
-      strategy.new arguments
+      selected_strategy = available_strategies.select { |strategy| strategy.url_format_is_valid?(arguments[:video_url])}.first
+      selected_strategy.new arguments
     end
 
     def youtube_video?
