@@ -1,7 +1,7 @@
 require "conred/version"
 require "net/http"
 require "erb"
-
+require 'active_support/all'
 
 module Conred
 
@@ -38,34 +38,30 @@ module Conred
     end
 
     def exist?
-      response = get_api_response
+      response = Net::HTTP.get_response(URI("http:#{api_uri}"))
       response.is_a?(Net::HTTPSuccess)
     end
 
     def viewCount
-      if self.exists?
-        body = get_api_response.body
+      if self.exist?
+        body = Net::HTTP.get_response(URI("http:#{api_uri}")).body
 
         if self.youtube_video?
-          body_json = Hash.from_xml(response.body).to_json
+          body_json = Hash.from_xml(body).to_json
           body_hash = JSON.parse(body_json)
-          body_hash["entry"]["statistics"]["viewCount"]
+          viewCount = body_hash["entry"]["statistics"]["viewCount"]
         end
 
         if self.vimeo_video?
           body_hash = JSON.parse(body)
-          body_hash['stats_number_of_plays']
+          viewCount = body_hash.first['stats_number_of_plays']
         end
+
+        return viewCount.to_i unless viewCount.nil?
       end
     end
 
     attr_reader :height, :width, :video_id, :error_message
 
-  end
-
-  private 
-
-  def get_api_response
-    Net::HTTP.get_response(URI("http:#{api_uri}"))
   end
 end

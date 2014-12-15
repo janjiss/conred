@@ -15,13 +15,13 @@ describe Conred do
     let(:vimeo_without_http) {Conred::Video.new(:video_url=>"vimeo.com/12311233")}
 
     let(:error_video) { Conred::Video.new(
-      :video_url => "http://google.com/12311233",
-      :error_message => "Some mistake in url")
-    }
+                          :video_url => "http://google.com/12311233",
+                        :error_message => "Some mistake in url")
+                        }
 
     it "should match youtube video" do
       expect(short_youtube_url).to be_youtube_video
-      expect(https_youtube_url).to be_youtube_video 
+      expect(https_youtube_url).to be_youtube_video
       expect(short_youtube_url_with_www).to be_youtube_video
       expect(long_youtube_url_with_features).to be_youtube_video
       expect(short_youtube_url_without_http_and_www).to be_youtube_video
@@ -83,6 +83,30 @@ describe Conred do
 
       it "should be false if uri isn't recognized" do
         expect(error_video.exist?).to eq(false)
+      end
+    end
+
+    describe "view count check" do
+      it "should render the view count of an existing youtube video" do
+        existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
+        expect(existing_video.viewCount.is_a? Integer).to eq(true)
+        expect(existing_video.viewCount).to be > 2000000
+      end
+
+      it "should return nil for the view count for a non existing youtube video" do
+        non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
+        expect(non_existing_video.viewCount).to eq(nil)
+      end
+
+      it "should render the view count of an existing vimeo video" do
+        existing_video = Conred::Video.new(:video_url=>"http://vimeo.com/87701971")
+        expect(existing_video.viewCount.is_a? Integer).to eq(true)
+        expect(existing_video.viewCount).to be > 1900000
+      end
+
+      it "should return nil for the view count for a non existing vimeo video" do
+        non_existing_video = Conred::Video.new(:video_url=>"http://vimeo.com/877019718976876")
+        expect(non_existing_video.viewCount).to eq(nil)
       end
     end
   end
