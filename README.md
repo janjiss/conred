@@ -49,7 +49,7 @@ c.vimeo_video? #=> false
 Or if it exists:
 
 ```ruby
-c.exists? # => true
+c.exist? # => true
 ```
 
 ## Contributing
