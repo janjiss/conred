@@ -52,6 +52,12 @@ Or if it exists:
 c.exists? # => true
 ```
 
+You can also obtain the view count of the video like this:
+
+```ruby
+c.viewCount
+```
+
 ## Contributing
 
 1. Fork it
