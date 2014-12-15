@@ -89,24 +89,24 @@ describe Conred do
     describe "view count check" do
       it "should render the view count of an existing youtube video" do
         existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzouc")
-        expect(existing_video.viewCount.is_a? Integer).to eq(true)
-        expect(existing_video.viewCount).to be > 2000000
+        expect(existing_video.view_count.is_a? Integer).to eq(true)
+        expect(existing_video.view_count).to be > 2000000
       end
 
       it "should return nil for the view count for a non existing youtube video" do
         non_existing_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        expect(non_existing_video.viewCount).to eq(nil)
+        expect(non_existing_video.view_count).to eq(nil)
       end
 
       it "should render the view count of an existing vimeo video" do
         existing_video = Conred::Video.new(:video_url=>"http://vimeo.com/87701971")
-        expect(existing_video.viewCount.is_a? Integer).to eq(true)
-        expect(existing_video.viewCount).to be > 1900000
+        expect(existing_video.view_count.is_a? Integer).to eq(true)
+        expect(existing_video.view_count).to be > 1900000
       end
 
       it "should return nil for the view count for a non existing vimeo video" do
         non_existing_video = Conred::Video.new(:video_url=>"http://vimeo.com/877019718976876")
-        expect(non_existing_video.viewCount).to eq(nil)
+        expect(non_existing_video.view_count).to eq(nil)
       end
     end
   end
