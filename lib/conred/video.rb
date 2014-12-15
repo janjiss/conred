@@ -43,7 +43,7 @@ module Conred
     end
 
     def viewCount
-      if self.exist?
+      if self.exists?
         body = get_api_response.body
 
         if self.youtube_video?
