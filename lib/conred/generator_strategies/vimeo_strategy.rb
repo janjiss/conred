@@ -16,7 +16,7 @@ class Conred::Video::VimeoStrategy
   private
 
   def get_video_id_from url
-    url[/vimeo\.com\/([0-9]*)/]
-    @video_id = $1
+    url[/vimeo\.com\/((\w*\/)+)?([0-9]*)/]
+    @video_id = $3
   end
 end

@@ -11,6 +11,7 @@ describe Conred do
 
     let(:vimeo_url) {Conred::Video.new(:video_url=>"http://vimeo.com/12311233")}
     let(:https_vimeo_url) {Conred::Video.new(:video_url=>"http://vimeo.com/12311233")}
+    let(:vimeo_channel_url) {Conred::Video.new(:video_url=>"https://vimeo.com/channels/staffpicks/107469289")}
     let(:evil_vimeo) {Conred::Video.new(:video_url=>"eeevil vimeo www.vimeo.com/12311233")}
     let(:vimeo_without_http) {Conred::Video.new(:video_url=>"vimeo.com/12311233")}
 
@@ -37,6 +38,7 @@ describe Conred do
       expect(vimeo_without_http).to be_vimeo_video
       expect(https_vimeo_url).to be_vimeo_video
       expect(vimeo_url).to be_vimeo_video
+      expect(vimeo_channel_url).to be_vimeo_video
     end
 
     describe "youtube embed code" do
