@@ -6,7 +6,7 @@ class Conred::Video::YoutubeStrategy
   end
 
   def api_uri
-    "//gdata.youtube.com/feeds/api/videos/#{@video_id}"
+    "//www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=#{@video_id}"
   end
 
   def video_link
