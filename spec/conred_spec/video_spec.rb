@@ -75,7 +75,7 @@ describe Conred do
 
       it "should make a request to the proper youtube uri" do
         non_existing_youtube_video = Conred::Video.new(:video_url=>"http://www.youtube.com/watch?v=Lrj5Kxdzoux")
-        expect(non_existing_youtube_video.api_uri).to eq("//gdata.youtube.com/feeds/api/videos/Lrj5Kxdzoux")
+        expect(non_existing_youtube_video.api_uri).to eq("//www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=Lrj5Kxdzoux")
       end
 
       it "should make a request to the proper vimeo uri" do
